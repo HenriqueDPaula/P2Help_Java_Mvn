@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Login</title>
+</h:head>
+
+<body bgcolor="#dddddd">
+	<h:form id="form">
+		<style>
+.noBorders tr, .noBorders td {
+	background: none !important;
+	border: none !important;
+	padding-right: 0px !important;
+}
+
+.inputWithoutBorder {
+	border-bottom: 1px solid green;
+	border-top: 0px !important;
+	border-right: 0px;
+	border-left: 0px;
+	width: 263px;
+	margin-left: 15px;
+}
+
+.outPut {
+	font-size: 13px;
+	width: 10% !important;
+	padding: 0px;
+	background-color: none;
+}
+
+.Div1 {
+	background-color: white;
+	width: 720px; /* this is needed */
+	height: 545px; /* this is needed */
+	padding: 0px 10px 10px 0px; /* this is for styling only */
+	position: absolute; /* this is needed */
+	margin: auto auto auto auto; /* this is needed */
+	left: 0; /* this is needed */
+	right: 0; /* this is needed */
+	top: 0; /* this is needed */
+	bottom: 0; /* this is needed */
+	box-shadow: 7px 9px black;
+	display: table;
+}
+
+#mensagem {
+	background: yellow !important;
+}
+
+.Div2 {
+	position: absolute;
+	border-right: 1px solid black;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+	left: 0%;
+	width: 50%;
+	height: 100%;
+	background-color: #dddddd;
+	left: 0%;
+	left: 0%;
+}
+
+.Div3 {
+	position: absolute;
+	border: none;
+	right: 0%;
+	width: 50%;
+	height: 100%;
+}
+
+.Div4 {
+	margin: 40% 18px 18px 18px;
+}
+
+.cadastrar {
+	font-size: 12px;
+	color: green;
+	float: left;
+}
+
+.login {
+	background: #3493e6cc !important;
+	padding: 5px 112px 5px 112px;
+	font-size: 14px !important;
+	color: white !important;
+	border: none !important;
+	font-size: 14px !important;
+	float: left;
+	margin-top: 20px;
+	margin-left: 16px;
+}
+
+.conta {
+	font-size: 12px;
+	margin-left: 10px;
+}
+
+.fullImagem {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	max-width: 100%;
+	max-height: 100%;
+	margin: auto;
+	overflow: hidden;
+}
+
+.arrow {
+	width: 0;
+	height: 0;
+	border-top: 100px solid #dddddd;
+	border-right: 100px solid transparent;
+	position: absolute;
+}
+</style>
+		<p:growl id="mensagem" />
+
+		<div class="fullImagem">
+<!-- 			<h:graphicImage name="grey.jpg" height="100%" width="100%" /> -->
+			<div class="Div1">
+				<div class="Div2">
+<!-- 					<h:graphicImage name="Maobranca.png" height="200" -->
+<!-- 						style="margin-top: 20%;" /> -->
+					<br />
+					<h:outputText value="P2" style="font-size: 90px; margin-left:30px;" />
+					<h:outputText value="Help" style="color: #a447a5; font-size: 90px;" />
+				</div>
+
+				<div class="Div3">
+					<div class="Div4">
+						<p:panelGrid columns="1" styleClass="noBorders"
+							columnClasses="ui-grid-col2">
+							<p:inputText placeholder="Email" styleClass="inputWithoutBorder"
+								value="#{usuarioBean.email}"
+								style="border-bottom: 1px solid green; border-top: 0px; border-left: 0px; border-right:0px;" />
+							<p:password styleClass="inputWithoutBorder" placeholder="Senha"
+								value="#{usuarioBean.senha}"
+								style="margin-top:10px; border-bottom: 1px solid green; border-top: 0px; border-left: 0px; border-right:0px;" />
+
+							<p:commandButton value="Login" styleClass="login" update="form"
+								action="#{usuarioBean.login()}" />
+							<p:panelGrid columns="2">
+								<h:outputText value="Não pussui uma conta?" styleClass="conta" />
+								<h:commandLink value="Cadastre-se" styleClass="cadastrar" 
+									action="#{usuarioBean.redirecionarCadastro()}" />
+							</p:panelGrid>
+						</p:panelGrid>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</body>
+</html>

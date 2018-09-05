@@ -1,0 +1,56 @@
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<h:form>
+
+			<p:messages />
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Titulo: " />
+				<p:inputText value="#{ofertaBean.titulo}" />
+
+				<p:outputLabel value="Descrição: " />
+				<p:inputTextarea value="#{ofertaBean.descricao}" />
+
+
+				<p:outputLabel value="Selecione um sistema" />
+				<h:panelGroup>
+					<p:selectOneMenu filter="true" value="#{ofertaBean.sistema}"
+						converter="sistemaConverter">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{ofertaBean.selectSistema()}">
+						</f:selectItems>
+					</p:selectOneMenu>
+					<p:commandButton value="add" immediate="true"
+						action="cadastrarSistema" />
+				</h:panelGroup>
+				<p:outputLabel value="Selecione uma categoria" />
+				<p:selectOneMenu filter="true" value="#{ofertaBean.categoria}"
+					converter="categoriaConverter">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{ofertaBean.selectCategoria()}">
+					</f:selectItems>
+				</p:selectOneMenu>
+
+
+				<!--			<p:outputLabel value="Ativar a oferta: " />
+			<p:selectOneRadio value="#{ofertaBean.radio}" required="true">
+				<f:selectItem itemLabel="Sim" itemValue="true" />
+				<f:selectItem itemLabel="NÃ£o" itemValue="false" />
+			</p:selectOneRadio>-->
+			</h:panelGrid>
+			<p:outputLabel value="Valor por hora(R$): " />
+			<p:inputText value="#{ofertaBean.valorHora}" />
+			<br />
+
+
+			<p:commandButton value="salvar" action="#{ofertaBean.cadastrar()}" />
+			<p:commandButton value="voltar" immediate="true" action="pageUsuario" />
+
+
+		</h:form>
+	</ui:define>
+</ui:decorate>

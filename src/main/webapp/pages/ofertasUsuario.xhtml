@@ -1,0 +1,55 @@
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:messages />
+
+			<p:dataTable filterEvent="enter" value="#{ofertaBean.listById()}"
+				var="ofertas" widgetVar="tabelaOferta" rows="15" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+
+				<h:inputHidden value="#{ofertas.idoferta}" />
+
+				<p:column headerText="Titulo">
+					<h:outputText value="#{ofertas.titulo}" />
+				</p:column>
+
+				<p:column headerText="Sistema">
+					<h:outputText value="#{ofertas.sistema.nome}" />
+				</p:column>
+
+				<p:column headerText="Categoria">
+					<h:outputText value="#{ofertas.categoria.descricao}" />
+				</p:column>
+
+				<p:column headerText="Valor/hora">
+					<h:outputText value="#{ofertas.valorHora}">
+						<f:convertNumber pattern="¤#,##0.00" currencySymbol="R$" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="Editar" action="#{ofertaBean.atualizar()}">
+						<f:setPropertyActionListener value="#{ofertas}"
+							target="#{ofertaBean.oferta}" />
+					</p:commandButton>
+				</p:column>
+				<p:column>
+					<p:commandButton value="Excluir"
+						action="#{ofertaBean.deleteOferta()}">
+						<f:setPropertyActionListener value="#{ofertas}"
+							target="#{ofertaBean.oferta}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:commandButton action="#{usuarioBean.redirecionaPerfil()}"
+				value="voltar" />
+		</h:form>
+	</ui:define>
+</ui:decorate>

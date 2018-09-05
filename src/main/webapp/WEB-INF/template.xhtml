@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>P2Help</title>
+</h:head>
+<body>
+	<h:form>
+		<style>
+.ui-widget-content {
+	background-color: #f5f5f5 !important;
+	border: none !important;
+}
+.ui-menuitem-link {
+	padding-top: 6px !important;
+	padding-bottom: 9px !important;
+}
+.ui-panelmenu-header {
+	border-left: 0px !important;
+	border-right: 0px !important;
+	border-top: 0px !important;
+	padding-top: 3px !important;
+	padding-bottom: 3px !important;
+}
+.classe-home {
+	font-size: 14px !important;
+	font-weight: bold !important;
+	border-bottom: 1px solid #d8d8d8 !important;
+	width: 225px !important;
+}
+.classe-signOut {
+	font-size: 14px !important;
+	font-weight: bold !important;
+	border-bottom: 1px solid #d8d8d8 !important;
+	width: 225px !important;
+	padding-bottom: 11px !important;
+}
+.classe-signOut.ui-state-hover {
+	background-color: #dddddd !important;
+	color: #424242 !important;
+}
+.classe-home.ui-state-hover {
+	background-color: #dddddd !important;
+	color: #424242 !important;
+}
+.ui-layout-unit-content {
+	overflow: hidden !important;
+}
+.right {
+	float: right;
+}
+.left {
+	float: left;
+}
+</style>
+
+		<!-- INSERIR UI:COMPOSITION, UI:INSERT E AFINS -->
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" resizable="false" size="60">
+<!-- 				<h:graphicImage library="imagens" name="oferta.png" height="45" -->
+<!-- 					style="margin-left:18px;" /> -->
+				<h:outputText value="P2Help"
+					style="margin-left: 10px; color:purple; font-size:32px !important; position:relative;" />
+				<h:outputLabel value="#{usuarioBean.usuario.nome}"
+					style="float:right; margin-right:18px; margin-top: 10px;" />
+			</p:layoutUnit>
+			<p:layoutUnit position="west" size="230" collapsible="true">
+				<p:menu>
+
+					<p:menuitem value="Home" icon="ui-icon-home"
+						action="#{usuarioBean.redirecionaPerfil()}"
+						styleClass="classe-home" />
+				</p:menu>
+				<p:panelMenu>
+					<p:submenu label="Ofertas" style="border:none !important; ">
+						<p:menuitem value="Contratar" icon="ui-icon-search"
+							action="#{ofertaBean.redirecionaOfertas()}"
+							style="font-size:13px;" />
+						<p:menuitem value="Publicar" icon="ui-icon-plus"
+							action="#{ofertaBean.redirecionaCadastroOferta()}"
+							style="font-size:13px;" />
+						<p:menuitem value="Contratadas"
+							icon="ui-icon-format_list_bulletedl"
+							action="#{ofertaBean.redirecionarContratadas()}"
+							style="font-size:13px;" />
+						<p:menuitem value="Minhas Ofertas" icon="ui-icon-server"
+							action="#{ofertaBean.redirecionaOfertasUsuario()}"
+							style="font-size:13px;" />
+					</p:submenu>
+					<p:submenu label="Perfil">
+						<p:menuitem value="Informações" icon="ui-icon-head"
+							action="#{usuarioBean.redirecionaPerfil()}"
+							style="font-size:13px;" />
+						<p:menuitem value="Atualizar" icon="ui-icon-sync"
+							action="#{usuarioBean.atualizar()}" style="font-size:13px;" />
+						<p:menuitem value="Excluir Conta" icon="ui-icon-trash"
+							action="#{usuarioBean.delete()}" style="font-size:13px;" />
+					</p:submenu>
+
+					<p:submenu label="Contato">
+						<p:menuitem value="Reclamações" style="font-size:13px;"
+							icon="ui-icon-thumb_down" />
+						<p:menuitem value="Sugestões e Melhorias" style="font-size:13px;"
+							icon="ui-icon-thumb_up" />
+					</p:submenu>
+				</p:panelMenu>
+				<p:menu>
+					<p:menuitem value="Sign-out" icon="ui-icon-exit_to_app"
+						action="#{usuarioBean.sair()}" styleClass="classe-signOut" />
+				</p:menu>
+			</p:layoutUnit>
+			<p:layoutUnit position="center">
+				<div style="margin: 18px 18px 18px 18px;">
+					<ui:insert name="content" />
+				</div>
+			</p:layoutUnit>
+			<p:layoutUnit position="east"
+				style="background-color:grey !important; boder: none !important;">
+			</p:layoutUnit>
+			<p:layoutUnit position="south">
+				<h:outputLabel value="All Rights reserved"
+					style="font-size:10px; padding: 0px;" />
+				<h:outputLabel value="ACnpj 454455522112212"
+					style="font-size:10px; padding: 0px;" />
+				<h:outputLabel value="Email: blablabla@hotmail.com"
+					style="font-size:10px; padding: 0px;" />
+			</p:layoutUnit>
+		</p:layout>
+
+	</h:form>
+</body>
+</html>

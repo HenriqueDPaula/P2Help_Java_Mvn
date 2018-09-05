@@ -1,0 +1,29 @@
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:messages />
+			<h:panelGrid>
+				<h:outputLabel value="Sistema" />
+				<h:inputText value="#{ofertaBean.sistemaNome}" required="true"
+					requiredMessage="Informe o nome por favor" />
+				<br />
+				<h:outputLabel value="Fabricante" />
+				<h:inputText value="#{ofertaBean.sistemaFabricante}" required="true"
+					requiredMessage="Informe o nome por favor" />
+				<br />
+			</h:panelGrid>
+
+			<h:commandButton value="salvar"
+				action="#{ofertaBean.cadastrarSistema()}" />
+			<p:commandButton action="cadastrarOferta" value="voltar"
+				immediate="true" />
+
+
+		</h:form>
+	</ui:define>
+</ui:decorate>

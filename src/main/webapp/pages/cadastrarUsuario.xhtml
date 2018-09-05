@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Login</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:messages id="messages" autoUpdate="true" showDetail="true" />
+		<h:panelGrid columns="2">
+			<p:outputLabel value="nome: " />
+			<p:inputText value="#{usuarioBean.nome}" required="true"
+				requiredMessage="Nome é obrigatório" />
+
+
+			<p:outputLabel value="email: " />
+			<p:inputText value="#{usuarioBean.email}" required="true"
+				requiredMessage="Email é obrigatório" />
+
+
+			<p:outputLabel value="senha: " />
+			<p:password value="#{usuarioBean.senha}" required="true"
+				requiredMessage="Senha é obrigatório" />
+
+			<p:outputLabel value="Confirmar senha: " />
+			<p:password value="#{usuarioBean.senhaConfirm}" required="true"
+				requiredMessage="Confirmação de senha é obrigatório" />
+
+			<p:outputLabel value="Bairro: " />
+			<p:inputText value="#{usuarioBean.bairro}" required="true"
+				requiredMessage="Bairro é obrigatório" />
+
+
+			<p:outputLabel value="Endereço: " />
+			<p:inputText value="#{usuarioBean.endereco}" required="true"
+				requiredMessage="Endereço é obrigatório" />
+
+
+			<p:outputLabel value=" Numero " />
+			<p:inputText value="#{usuarioBean.numero}" required="true"
+				requiredMessage="Nome é obrigatório" size="2" />
+
+
+			<p:outputLabel value="complemento: " />
+			<p:inputText value="#{usuarioBean.complemento}" />
+
+
+			<p:outputLabel value="Cpf: " />
+			<p:inputMask mask="999.999.999-99" value="#{usuarioBean.cpf}"
+				required="true" requiredMessage="Cpf é obrigatório" />
+
+
+
+			<p:outputLabel value="RG:  " />
+			<p:inputMask mask="99.999.999-9" value="#{usuarioBean.rg}"
+				required="true" requiredMessage="RG é obrigatório" />
+
+
+			<p:outputLabel value="RG Emissor: " />
+			<p:inputText value="#{usuarioBean.rgEmissor}" required="true">
+			</p:inputText>
+
+
+
+
+			<p:outputLabel value="Municipio: " />
+			<p:selectOneMenu filter="true" value="#{usuarioBean.municipio}"
+				required="true" requiredMessage="Municipio é obrigatório"
+				converter="municipioConverter">
+				<f:selectItems value="#{usuarioBean.selectMunicipios()}">
+				</f:selectItems>
+
+			</p:selectOneMenu>
+		</h:panelGrid>
+
+		<p:commandButton value="Enviar"
+			action="#{usuarioBean.validarSenhas()}" />
+
+		<p:commandButton value="voltar" immediate="true" action="/login" />
+
+		<br />
+
+	</h:form>
+</h:body>
+</html>

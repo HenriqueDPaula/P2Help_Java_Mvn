@@ -1,0 +1,46 @@
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:messages />
+			<p:panelGrid columns="2">
+
+				<h:outputLabel value="Título:  " />
+				<h:outputText value="#{ofertaBean.oferta.titulo}" />
+
+				<h:outputLabel value="Descrição: " styleClass="emphasis" />
+				<h:outputText value="#{ofertaBean.oferta.descricao}" />
+
+
+				<h:outputLabel value="Sistema: " styleClass="emphasis" />
+				<h:outputText value="#{ofertaBean.oferta.sistema.nome}" />
+
+
+				<h:outputLabel value="Categoria: " styleClass="emphasis" />
+				<h:outputText value="#{ofertaBean.oferta.categoria.descricao}" />
+
+
+				<h:outputLabel value="Ativo: " styleClass="emphasis" />
+				<h:outputText value="#{ofertaBean.oferta.status}" />
+
+				<h:outputLabel value="Valor: " styleClass="emphasis" />
+				<h:outputText value="#{ofertaBean.oferta.valorHora}" />
+
+				<h:outputLabel value="Publicado em: " styleClass="emphasis" />
+				<h:outputText value="#{ofertaBean.oferta.dataOferta}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+				</h:outputText>
+
+			</p:panelGrid>
+		</h:form>
+		<h:form>
+			<p:commandButton action="pageUsuario" value="voltar" />
+			<p:commandButton action="#{ofertaBean.atualizar()}" value="Editar" />
+
+		</h:form>
+	</ui:define>
+</ui:decorate>

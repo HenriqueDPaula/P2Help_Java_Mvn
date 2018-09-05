@@ -1,0 +1,64 @@
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+
+		<h:form>
+			<p:messages />
+			<h:inputHidden value="#{usuarioBean.usuario.idusuario}" />
+
+			<h:panelGrid columns="2">
+
+
+
+				<h:outputLabel value="Nome" styleClass="emphasis" />
+				<p:inputText value="#{usuarioBean.usuario.nome}" />
+
+				<h:outputLabel value="senha" styleClass="emphasis" />
+				<p:inputText value="#{usuarioBean.usuario.senha}">
+				</p:inputText>
+
+				<h:outputLabel value="E-mail" for="email" styleClass="emphasis" />
+				<p:inputText id="email" label="E-mail"
+					value="#{usuarioBean.usuario.email}">
+					<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
+				</p:inputText>
+
+				<h:outputLabel value="Endereço" for="ender" styleClass="emphasis" />
+				<p:inputText id="ender" value="#{usuarioBean.usuario.endereco}"
+					required="true" />
+
+				<h:outputLabel value="Número" styleClass="emphasis" />
+				<p:inputText value="#{usuarioBean.usuario.numero}" />
+
+				<h:outputText value="Bairro" styleClass="emphasis" />
+				<p:inputText value="#{usuarioBean.usuario.bairro}" />
+
+				<h:outputText value="Complemento" styleClass="emphasis" />
+				<p:inputText value="#{usuarioBean.usuario.complemento}" />
+
+
+				<h:outputLabel value="Municipio: " />
+				<p:selectOneMenu filter="true"
+					value="#{usuarioBean.usuario.municipio}" required="true"
+					requiredMessage="Municipio é obrigatório"
+					converter="municipioConverter">
+					<f:selectItems value="#{usuarioBean.selectMunicipios()}">
+					</f:selectItems>
+
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+
+			<hr />
+
+			<h:commandButton action="#{usuarioBean.confirmUpdate()}"
+				value="Atualizar" />
+			<p:commandButton value="voltar" immediate="true" action="pageUsuario" />
+
+		</h:form>
+	</ui:define>
+</ui:decorate>

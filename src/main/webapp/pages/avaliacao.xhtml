@@ -1,0 +1,29 @@
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:messages />
+			<hr />
+			<h:outputText value="#{agendaBean.agendaAvaliar.idagenda.dataEhora}" />
+			<p:panelGrid columns="2" border="1">
+				<p:outputLabel value="Nota pelo serviço:" />
+				<p:rating value="#{agendaBean.servico}" stars="10" />
+
+				<p:outputLabel value="Nota pelo atendimento:" />
+				<p:rating value="#{agendaBean.atendimento}" stars="10" />
+
+				<p:inputTextarea rows="10" cols="50" counter="display"
+					placeholder="Comentário" value="#{agendaBean.comentario}"
+					maxlength="5000" counterTemplate="{0} caracteres restantes." />
+				<h:outputText id="display" />
+			</p:panelGrid>
+			<hr />
+
+			<p:commandButton value="enviar" action="#{agendaBean.avaliacao()}" />
+		</h:form>
+	</ui:define>
+</ui:decorate>

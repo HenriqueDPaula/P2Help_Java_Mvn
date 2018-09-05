@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="P2Help">
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<!-- <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property> -->
+		<!-- <property name="hibernate.connection.password">aluno</property> -->
+		<!-- <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property> -->
+		<!-- <property name="hibernate.connection.username">aluno</property> -->
+		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.use_sql_comments">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.timeout">300</property>
+		<property name="javax.persistence.validation.mode">none</property>
+		<!-- <property name="hibernate.connection.datasource">java:jboss/datasources/OracleDSALUNO</property> -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.connection.datasource">java:jboss/datasources/OracleDSALUNO</property>
+		<mapping class="model.Usuario" />
+		<mapping class="model.Municipios" />
+		<mapping class="model.Sistema" />
+		<mapping class="model.Categoria" />
+		<mapping class="model.Oferta" />
+		<mapping class="model.Agenda" />
+		<mapping class="model.Contratacao" />
+		<mapping class="model.Avaliacao" />
+	</session-factory>
+</hibernate-configuration>
