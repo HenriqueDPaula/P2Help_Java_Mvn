@@ -37,7 +37,7 @@ public class AvaliacaoDAO implements Serializable {
 		String hql = "from Avaliacao where IDCONTRATACAO = :idcontratacao";
 		Query query = (Query) session.createQuery(hql);
 		query.setParameter("idcontratacao", idcontratacao);
-		avaliacao = (Avaliacao) query;
+		avaliacao = (Avaliacao) query.uniqueResult();
 
 		return avaliacao;
 	}
