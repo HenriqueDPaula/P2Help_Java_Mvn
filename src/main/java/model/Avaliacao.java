@@ -116,6 +116,36 @@ public class Avaliacao implements Serializable {
 		this.idcontratacao = contratacao;
 	}
 
+	/**
+	 * @return the idcontratacao
+	 */
+	public Contratacao getIdcontratacao() {
+		return idcontratacao;
+	}
+
+	/**
+	 * @param idcontratacao
+	 *            the idcontratacao to set
+	 */
+	public void setIdcontratacao(Contratacao idcontratacao) {
+		this.idcontratacao = idcontratacao;
+	}
+
+	/**
+	 * @return the idavaliacao
+	 */
+	public Integer getIdavaliacao() {
+		return idavaliacao;
+	}
+
+	/**
+	 * @param idavaliacao
+	 *            the idavaliacao to set
+	 */
+	public void setIdavaliacao(Integer idavaliacao) {
+		this.idavaliacao = idavaliacao;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -154,61 +184,4 @@ public class Avaliacao implements Serializable {
 		return true;
 	}
 
-	/**
-	 * @return the idcontratacao
-	 */
-	public Contratacao getIdcontratacao() {
-		return idcontratacao;
-	}
-
-	/**
-	 * @param idcontratacao
-	 *            the idcontratacao to set
-	 */
-	public void setIdcontratacao(Contratacao idcontratacao) {
-		this.idcontratacao = idcontratacao;
-	}
-
-	/**
-	 * @return the idavaliacao
-	 */
-	public Integer getIdavaliacao() {
-		return idavaliacao;
-	}
-
-	/**
-	 * @param idavaliacao
-	 *            the idavaliacao to set
-	 */
-	public void setIdavaliacao(Integer idavaliacao) {
-		this.idavaliacao = idavaliacao;
-	}
-
-	//
-	// @Entity
-	// @Table(name = "TBL_PESSOA")
-	// public class Pessoa {
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	// @Column(name = "PK_PESSOA")
-	// private Long id;
-	//
-	// @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL,
-	// fetch = FetchType.LAZY, optional = true)
-	// private Pet pet;
-	// }
-	//
-	// @Entity
-	// @Table(name = "TBL_PET")
-	// public class Pet {
-	// @Id
-	// private Long id;
-	//
-	// @MapsId
-	// @OneToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "PK_PESSOA")
-	// private Pessoa pessoa;
-	//
-	// }
-	// Equals and HashCode
 }
