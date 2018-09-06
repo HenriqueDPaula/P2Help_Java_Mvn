@@ -23,6 +23,7 @@ import service.CategoriaService;
 import service.OfertaService;
 import service.SistemaService;
 import service.UsuarioService;
+import util.Util;
 
 @Named("ofertaBean")
 @SessionScoped
@@ -68,7 +69,9 @@ public class OfertaBean implements Serializable {
 		this.ofertaService = new OfertaService();
 		this.usuarioService = new UsuarioService();
 		selectSistema();
-		usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioL"); // usuario
+		usuario = (Usuario) Util.getSessionParameter("usuarioL");
+		// usuario = (Usuario)
+		// FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioL");
 
 	}
 
@@ -130,16 +133,16 @@ public class OfertaBean implements Serializable {
 		oferta.setValorHora(valorHora);
 		try {
 			ofertaService.save(oferta);
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ofertaC", oferta); // oferta
-																											// sessão
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta cadastrada com sucesso!", " "));
-			return "agenda";
+			Util.setSessionParameter("ofertaC", oferta);
+			// FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ofertaC", oferta);
+			Util.mensagemInfo("Oferta cadastrada com sucesso!");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta cadastrada com sucesso!", " "));
+			return "agenda.jsf?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro, não foi possivel cadastrar a oferta", " "));
-			return "cadastrarOferta";
+			Util.mensagemErro("N�o foi possivel cadastrar!");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro, não foi possivel cadastrar a oferta", " "));
+			return "cadastrarOferta.jsf?faces-redirect=true";
 		}
 
 	}
@@ -151,7 +154,7 @@ public class OfertaBean implements Serializable {
 	 */
 	public String atualizar() {
 		this.oferta = ofertaService.findById(this.oferta.getIdoferta()); // Encontrando oferta pelo id para atualizar
-		return "atualizarOferta";
+		return "atualizarOferta.jsf?faces-redirect=true";
 	}
 
 	/**
@@ -167,15 +170,15 @@ public class OfertaBean implements Serializable {
 		oferta.setDataOferta(sqlTimestamp); // Data e hora do sistema
 		try {
 			ofertaService.atualizar(oferta);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta Atualizada", " "));
+			Util.mensagemInfo("Oferta atualizada!");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta Atualizada", " "));
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro, não foi possivel atualizar a oferta", " "));
+			Util.mensagemErro("N�o foi possivel atualizar!");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro, não foi possivel atualizar a oferta", " "));
 		}
 
-		return "pageOferta";
+		return "pageOferta.jsf?faces-redirect=true";
 	}
 
 	/**
@@ -199,13 +202,7 @@ public class OfertaBean implements Serializable {
 	 */
 	public List<Oferta> listById() {
 		listOferta = ofertaService.listById(usuario.getIdusuario());
-		if (listOferta != null) {
-			return listOferta;
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "nenhuma", " Oferta cadastrada"));
-			return null;
-		}
+		return listOferta;
 	}
 
 	/**
@@ -214,16 +211,16 @@ public class OfertaBean implements Serializable {
 	public String deleteOferta() {
 		this.oferta = ofertaService.findById(this.oferta.getIdoferta());
 		try {
-			deleteConfirm(); // Método chamando a service de oferta
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta Excluida", " "));
+			deleteConfirm();
+			Util.mensagemInfo("Oferta exclu�da!");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta Excluida", " "));
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Contrato atrelado a esta oferta!", " "));
+			Util.mensagemErro("Contrato atrelado a esta oferta");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Contrato atrelado a esta oferta!", " "));
 		}
 
-		return "pageUsuario";
+		return "pageUsuario.jsf?faces-redirect=true";
 
 	}
 
@@ -258,22 +255,22 @@ public class OfertaBean implements Serializable {
 	 * Redirecionamento de p�gina
 	 */
 	public String redirecionaOfertas() {
-		return "Ofertas";
+		return "Ofertas.jsf?faces-redirect=true";
 	}
 
 	public String redirecionarContratadas() {
-		return "ofertasContratadas";
+		return "ofertasContratadas.jsf?faces-redirect=true";
 	}
 
 	/*
 	 * Redirecionamento de p�gina
 	 */
 	public String redirecionaCadastroOferta() {
-		return "cadastrarOferta";
+		return "cadastrarOferta.jsf?faces-redirect=true";
 	}
 
 	public String redirecionaOfertasUsuario() {
-		return "ofertasUsuario";
+		return "ofertasUsuario.jsf?faces-redirect=true";
 	}
 
 	// public void refresh() {
@@ -300,13 +297,13 @@ public class OfertaBean implements Serializable {
 		sistema.setNome(sistemaFabricante);
 		try {
 			sistemaService.save(sistema);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema, cadastrado", " "));
+			Util.mensagemInfo("Sistema cadastrado");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema, cadastrado", " "));
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Houve um erro, sistema não cadastrado", " "));
+			Util.mensagemErro("Erro banco de dados!");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Houve um erro, sistema não cadastrado", " "));
 		}
 
 	}
@@ -317,7 +314,7 @@ public class OfertaBean implements Serializable {
 	 * @return
 	 */
 	public String redirecionarSistema() {
-		return "cadastrarSistema";
+		return "cadastrarSistema.jsf?faces-redirect=true";
 	}
 
 	public Oferta getOferta() {

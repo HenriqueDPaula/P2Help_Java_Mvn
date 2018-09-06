@@ -21,6 +21,7 @@ import model.Usuario;
 import service.AgendaService;
 import service.AvaliacaoService;
 import service.ContratacaoService;
+import util.Util;
 
 @SessionScoped
 @Named("agendaBean")
@@ -65,11 +66,13 @@ public class AgendaBean implements Serializable {
 		contratacao = new Contratacao();
 		avaliacao = new Avaliacao();
 		agendaAvaliar = new Agenda();
-		oferta = (Oferta) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ofertaC"); // Oferta
-																													// //
-																													// sess�o
-		usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioL"); // Usuario
-		// logado
+		oferta = (Oferta) Util.getSessionParameter("ofertaC");
+		// oferta = (Oferta)
+		// FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ofertaC");
+		usuario = (Usuario) Util.getSessionParameter("usuarioL"); // sess�o
+		// usuario = (Usuario)
+		// FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioL");
+
 		setDataEhora(null);
 	}
 
@@ -79,21 +82,18 @@ public class AgendaBean implements Serializable {
 	 */
 	public String cadastrarAgenda() {
 
-		agendaPK = new AgendaPK(); // Nova chave primária
+		agendaPK = new AgendaPK();
 		agendaPK.setDataEhora(dataEhora);
-		agendaPK.setOferta(oferta); // Objeto oferta que está na sessão
-		agenda.setIdagenda(agendaPK); // Chave primária da agenda
+		agendaPK.setOferta(oferta);
+		agenda.setIdagenda(agendaPK);
 		try {
 			agendaService.save(agenda);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Agenda", " Cadastrada com sucesso!"));
+			Util.mensagemInfo("Agenda cadastrada!");
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possivel cadastrar a agenda", " "));
+			Util.mensagemErro("Erro banco de dados");
 		}
 
-		
 		return "agenda.jsf?faces-redirect=true";
 	}
 
@@ -118,7 +118,7 @@ public class AgendaBean implements Serializable {
 			agendaService.atualizar(agenda); // Chama o método para atualizar, inserindo o id do usuario
 			cadastrarContratacao(); // Cadastrar na Tabela Contratação esta Agenda
 
-			return "contratacaoSucesso";
+			return "contratacaoSucesso.jsf?faces-redirect=true";
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,7 +202,7 @@ public class AgendaBean implements Serializable {
 	public String redirecionarAgenda() {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Concluido", " !"));
-		return "ofertasUsuario";
+		return "ofertasUsuario.jsf?faces-redirect=true";
 	}
 
 	/**
