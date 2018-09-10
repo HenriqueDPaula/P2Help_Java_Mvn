@@ -1,6 +1,7 @@
 package dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -106,6 +107,7 @@ public class AgendaDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Agenda> listById(int idoferta) {
 		List<Agenda> listAgenda = null;
+		List<Agenda> listaAgendasNaoContratadas = new ArrayList<>();
 
 		session = HibernateUtil.getSessionFactory().openSession();
 
@@ -113,8 +115,17 @@ public class AgendaDAO implements Serializable {
 		Query query = (Query) session.createQuery(hql);
 		query.setParameter("idoferta", idoferta);
 		listAgenda = query.list();
+		if (listAgenda != null) {
+			for (Agenda agenda : listAgenda) {
+				Contratacao contratacao = contratacaoDAO.findById(agenda.getIdagenda().getOferta().getIdoferta(),
+						agenda.getIdagenda().getDataEhora());
+				if (contratacao == null) {
+					listaAgendasNaoContratadas.add(agenda);
+				}
+			}
+		}
 
-		return listAgenda;
+		return listaAgendasNaoContratadas;
 	}
 
 	@SuppressWarnings("unchecked")
