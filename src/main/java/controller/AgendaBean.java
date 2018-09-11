@@ -21,6 +21,7 @@ import model.Usuario;
 import service.AgendaService;
 import service.AvaliacaoService;
 import service.ContratacaoService;
+import util.Util;
 
 @SessionScoped
 @Named("agendaBean")
@@ -93,7 +94,6 @@ public class AgendaBean implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possivel cadastrar a agenda", " "));
 		}
 
-		
 		return "agenda.jsf?faces-redirect=true";
 	}
 
@@ -142,7 +142,12 @@ public class AgendaBean implements Serializable {
 
 		contratacao.setDataContratacao(new Date()); // Data e hora do sistema
 		contratacao.setStatus('p'); // Pendente, mudará o status através de uma trigger no BD
-		contratacaoService.save(contratacao);
+		try {
+			contratacaoService.save(contratacao);
+			Util.emailOferta(agenda.getIdagenda().getOferta(), usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
