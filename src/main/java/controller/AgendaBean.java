@@ -11,6 +11,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.context.PrimeFacesContext;
+
 import dao.AgendaDAO;
 import model.Agenda;
 import model.AgendaPK;
@@ -37,23 +39,27 @@ public class AgendaBean implements Serializable {
 	 */
 	private AgendaPK agendaPK;
 	private Date dataEhora;
-	private Usuario usuario;
-	private Oferta oferta;
+	
 	private AgendaService agendaService;
 	private ContratacaoService contratacaoService;
 	private AvaliacaoService avaliacaoService;
+	
 	private Agenda agenda;
-
+	private Agenda agendaAvaliar;
+	private Agenda agendaSelecionada;
 	private Avaliacao avaliacao;
+	private Contratacao contratacao;
+	private Contratacao contratacaoSelecionada;
+	private Oferta oferta;
+	private Oferta ofertaSelecionada;
+	private Usuario usuario;
+	
 	private Integer servico;
 	private Integer atendimento;
 	private String comentario;
-	private Contratacao contratacao;
-	private Oferta ofertaSelecionada;
+	
 	private List<Agenda> listarAgenda;
-	private Agenda agendaSelecionada;
-	private Contratacao contratacaoSelecionada;
-	private Agenda agendaAvaliar;
+	
 
 	/**
 	 * Construtor instanciando os principais atributos
@@ -66,11 +72,8 @@ public class AgendaBean implements Serializable {
 		contratacao = new Contratacao();
 		avaliacao = new Avaliacao();
 		agendaAvaliar = new Agenda();
-		oferta = (Oferta) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ofertaC"); // Oferta
-																													// //
-																													// sess�o
-		usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioL"); // Usuario
-		// logado
+		oferta = (Oferta) Util.getSessionParameter("ofertaC"); // Oferta
+		usuario = (Usuario) Util.getSessionParameter("usuarioL"); // Usuario
 		setDataEhora(null);
 	}
 
@@ -86,15 +89,14 @@ public class AgendaBean implements Serializable {
 		agenda.setIdagenda(agendaPK); // Chave primária da agenda
 		try {
 			agendaService.save(agenda);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Agenda", " Cadastrada com sucesso!"));
+			Util.mensagemInfo("Agenda cadastrada com sucesso!");
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possivel cadastrar a agenda", " "));
+			Util.mensagemErro("Erro Banco de Dados");
 		}
 
-		return "agenda.jsf?faces-redirect=true";
+		return "agenda";
 	}
 
 	/**
@@ -122,8 +124,7 @@ public class AgendaBean implements Serializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro interno", " "));
+			Util.mensagemErro("Erro Banco de Dados");
 			return "";
 		}
 
@@ -136,10 +137,6 @@ public class AgendaBean implements Serializable {
 	public void cadastrarContratacao() {
 		contratacao = new Contratacao();
 		contratacao.setAgenda(agenda); // Setando agenda na tabela contratação
-		java.util.Date date = new java.util.Date(); // Instanciando um objeto do tipo Date da classe java.util
-		long t = date.getTime();
-		java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(t);
-
 		contratacao.setDataContratacao(new Date()); // Data e hora do sistema
 		contratacao.setStatus('p'); // Pendente, mudará o status através de uma trigger no BD
 		try {
@@ -191,22 +188,19 @@ public class AgendaBean implements Serializable {
 
 		try {
 			avaliacaoService.save(avaliacao);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Avaliado com sucesso", ""));
+			Util.mensagemInfo("Avaliado com sucesso!");
 			return "avaliacaoSucesso"; // tela final do sistema na parte do usuário contratante
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possivel avaliar", ""));
+			Util.mensagemErro("Erro Banco de Dados");
 			return "";
 		}
 
 	}
 
 	public String redirecionarAgenda() {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Concluido", " !"));
+		Util.mensagemInfo("Conclu�do!");
 		return "ofertasUsuario";
 	}
 

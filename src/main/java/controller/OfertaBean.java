@@ -2,6 +2,7 @@ package controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ import service.CategoriaService;
 import service.OfertaService;
 import service.SistemaService;
 import service.UsuarioService;
+import util.Util;
 
 @Named("ofertaBean")
 @SessionScoped
@@ -33,27 +35,32 @@ public class OfertaBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 5998663528528731657L;
 	private Oferta oferta;
+	private Oferta ofertaSelecionada;
 	private Municipios municipio;
 	private Usuario usuario;
+	private Sistema sistema;
+	private Categoria categoria;
+
 	private OfertaService ofertaService;
 	private SistemaService sistemaService;
 	private CategoriaService categoriaService;
-	private String titulo;
-	private String descricao;
-	private float valorHora;
-	private char status;
-	private Categoria categoria;
+	private UsuarioService usuarioService;
+
 	private List<SelectItem> sistemasSelect;
 	private List<SelectItem> categoriasSelect;
 	private List<Categoria> categorias;
-	private Sistema sistema;
-	private CategoriaDAO categoriaDAO;
-	private boolean radio;
-	private UsuarioService usuarioService;
 	private List<Oferta> listOfertas;
 	private List<Oferta> listOferta;
+
+	private CategoriaDAO categoriaDAO;
+
+	private float valorHora;
+	private char status;
+	private boolean radio;
 	private Boolean flagModal;
-	private Oferta ofertaSelecionada;
+
+	private String titulo;
+	private String descricao;
 	private String sistemaNome;
 	private String sistemaFabricante;
 
@@ -68,7 +75,7 @@ public class OfertaBean implements Serializable {
 		this.ofertaService = new OfertaService();
 		this.usuarioService = new UsuarioService();
 		selectSistema();
-		usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioL"); // usuario
+		usuario = (Usuario) Util.getSessionParameter("usuarioL"); // usuario
 
 	}
 
@@ -109,36 +116,35 @@ public class OfertaBean implements Serializable {
 		return sistemasSelect;
 	}
 
-	/**
-	 * Cadastrar Oferta o
-	 * 
-	 * @return
-	 */
-	public String cadastrar() {
-
-		oferta = new Oferta();
+	public Oferta novaOferta() {
+		Oferta oferta = new Oferta();
 		oferta.setTitulo(titulo);
-		java.util.Date date = new java.util.Date(); // Instanciando um objeto do tipo Date da classe java.util
-		long t = date.getTime();
-		java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(t);
-		oferta.setDataOferta(sqlTimestamp); // Data e hora do sistema
+		oferta.setDataOferta(new Date()); // Data e hora do sistema
 		oferta.setDescricao(descricao);
 		oferta.setCategoria(categoria);
 		oferta.setSistema(sistema);
 		oferta.setUsuario(usuario);
 		oferta.setStatus('s'); // Ativo
 		oferta.setValorHora(valorHora);
+
+		return oferta;
+	}
+
+	/**
+	 * Cadastrar Oferta o
+	 * 
+	 * @return
+	 */
+	public String cadastrar() {
+		oferta = novaOferta();
 		try {
 			ofertaService.save(oferta);
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ofertaC", oferta); // oferta
-																											// sessão
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta cadastrada com sucesso!", " "));
+			Util.setSessionParameter("ofertaC", oferta); // oferta
+			Util.mensagemInfo("Oferta Cadastrada com sucesso!");
 			return "agenda";
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro, não foi possivel cadastrar a oferta", " "));
+			Util.mensagemErro("Erro Banco de Dados");
 			return "cadastrarOferta";
 		}
 
@@ -160,19 +166,13 @@ public class OfertaBean implements Serializable {
 	 * @return
 	 */
 	public String atualizarConfirm() {
-
-		java.util.Date date = new java.util.Date(); // Instanciando um objeto do tipo Date da classe java.util
-		long t = date.getTime();
-		java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(t);
-		oferta.setDataOferta(sqlTimestamp); // Data e hora do sistema
+		oferta.setDataOferta(new Date()); // Data e hora do sistema
 		try {
 			ofertaService.atualizar(oferta);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta Atualizada", " "));
+			Util.mensagemInfo("Oferta atualizada");
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro, não foi possivel atualizar a oferta", " "));
+			Util.mensagemErro("Erro Banco de Dados");
 		}
 
 		return "pageOferta";
@@ -199,13 +199,7 @@ public class OfertaBean implements Serializable {
 	 */
 	public List<Oferta> listById() {
 		listOferta = ofertaService.listById(usuario.getIdusuario());
-		if (listOferta != null) {
-			return listOferta;
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "nenhuma", " Oferta cadastrada"));
-			return null;
-		}
+		return listOferta;
 	}
 
 	/**
@@ -215,12 +209,10 @@ public class OfertaBean implements Serializable {
 		this.oferta = ofertaService.findById(this.oferta.getIdoferta());
 		try {
 			deleteConfirm(); // Método chamando a service de oferta
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Oferta Excluida", " "));
+			Util.mensagemInfo("Oferta exclu�da");
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Contrato atrelado a esta oferta!", " "));
+			Util.mensagemErro("Contrato atrelado a esta oferta");
 		}
 
 		return "pageUsuario";

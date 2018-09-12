@@ -43,6 +43,10 @@ public class Util {
 		return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(nome);
 	}
 
+	public static void invalidateSession() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	}
+
 	public static void manterMensagem() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext extContext = context.getExternalContext();

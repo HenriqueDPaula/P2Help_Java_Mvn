@@ -6,8 +6,8 @@
 	template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
 
-		<h:form>
-			<p:messages />
+		<h:form id="form">
+			<p:messages id="mensagem" />
 			<p:panel id="panel">
 				<h:panelGrid columns="2">
 					<p:outputLabel for="datetime"
@@ -19,11 +19,9 @@
 
 			<p:toolbar>
 				<f:facet name="left">
-					<h:commandButton value="limpar">
-						<p:ajax update="panel" resetValues="true" />
-						<p:commandButton value="salvar agenda"
-							action="#{agendaBean.cadastrarAgenda()}" />
-					</h:commandButton>
+					<p:commandButton value="salvar agenda" update="form:mensagem"
+						action="#{agendaBean.cadastrarAgenda()}" />
+
 				</f:facet>
 				<f:facet name="right">
 					<p:commandButton value="próximo"
