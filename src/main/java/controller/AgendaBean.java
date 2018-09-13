@@ -1,19 +1,13 @@
 package controller;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.primefaces.context.PrimeFacesContext;
-
-import dao.AgendaDAO;
 import model.Agenda;
 import model.AgendaPK;
 import model.Avaliacao;
@@ -39,11 +33,11 @@ public class AgendaBean implements Serializable {
 	 */
 	private AgendaPK agendaPK;
 	private Date dataEhora;
-	
+
 	private AgendaService agendaService;
 	private ContratacaoService contratacaoService;
 	private AvaliacaoService avaliacaoService;
-	
+
 	private Agenda agenda;
 	private Agenda agendaAvaliar;
 	private Agenda agendaSelecionada;
@@ -53,13 +47,12 @@ public class AgendaBean implements Serializable {
 	private Oferta oferta;
 	private Oferta ofertaSelecionada;
 	private Usuario usuario;
-	
+
 	private Integer servico;
 	private Integer atendimento;
 	private String comentario;
-	
+
 	private List<Agenda> listarAgenda;
-	
 
 	/**
 	 * Construtor instanciando os principais atributos
@@ -96,7 +89,7 @@ public class AgendaBean implements Serializable {
 			Util.mensagemErro("Erro Banco de Dados");
 		}
 
-		return "agenda";
+		return "/agenda/agenda";
 	}
 
 	/**
@@ -120,7 +113,7 @@ public class AgendaBean implements Serializable {
 			agendaService.atualizar(agenda); // Chama o método para atualizar, inserindo o id do usuario
 			cadastrarContratacao(); // Cadastrar na Tabela Contratação esta Agenda
 
-			return "contratacaoSucesso";
+			return "/contratacao/sucesso";
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -189,7 +182,7 @@ public class AgendaBean implements Serializable {
 		try {
 			avaliacaoService.save(avaliacao);
 			Util.mensagemInfo("Avaliado com sucesso!");
-			return "avaliacaoSucesso"; // tela final do sistema na parte do usuário contratante
+			return "/avaliacao/sucesso"; // tela final do sistema na parte do usuário contratante
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -201,7 +194,11 @@ public class AgendaBean implements Serializable {
 
 	public String redirecionarAgenda() {
 		Util.mensagemInfo("Conclu�do!");
-		return "ofertasUsuario";
+		return "/oferta/usuario";
+	}
+	
+	public String redirecionarAvaliacao() {
+		return "/avaliacao/avaliacao";
 	}
 
 	/**

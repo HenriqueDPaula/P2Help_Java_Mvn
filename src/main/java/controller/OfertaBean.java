@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -141,11 +140,11 @@ public class OfertaBean implements Serializable {
 			ofertaService.save(oferta);
 			Util.setSessionParameter("ofertaC", oferta); // oferta
 			Util.mensagemInfo("Oferta Cadastrada com sucesso!");
-			return "agenda";
+			return "/agenda/agenda";
 		} catch (Exception e) {
 			e.printStackTrace();
 			Util.mensagemErro("Erro Banco de Dados");
-			return "cadastrarOferta";
+			return "/oferta/cadastrar";
 		}
 
 	}
@@ -157,7 +156,7 @@ public class OfertaBean implements Serializable {
 	 */
 	public String atualizar() {
 		this.oferta = ofertaService.findById(this.oferta.getIdoferta()); // Encontrando oferta pelo id para atualizar
-		return "atualizarOferta";
+		return "/oferta/atualizar";
 	}
 
 	/**
@@ -175,7 +174,7 @@ public class OfertaBean implements Serializable {
 			Util.mensagemErro("Erro Banco de Dados");
 		}
 
-		return "pageOferta";
+		return "/oferta/dados";
 	}
 
 	/**
@@ -215,7 +214,7 @@ public class OfertaBean implements Serializable {
 			Util.mensagemErro("Contrato atrelado a esta oferta");
 		}
 
-		return "pageUsuario";
+		return "/usuario/perfil";
 
 	}
 
@@ -250,22 +249,22 @@ public class OfertaBean implements Serializable {
 	 * Redirecionamento de p�gina
 	 */
 	public String redirecionaOfertas() {
-		return "Ofertas";
+		return "/oferta/Ofertas";
 	}
 
 	public String redirecionarContratadas() {
-		return "ofertasContratadas";
+		return "/oferta/contratadas";
 	}
 
 	/*
 	 * Redirecionamento de p�gina
 	 */
 	public String redirecionaCadastroOferta() {
-		return "cadastrarOferta";
+		return "/oferta/cadastrar";
 	}
 
 	public String redirecionaOfertasUsuario() {
-		return "ofertasUsuario";
+		return "/oferta/usuario";
 	}
 
 	// public void refresh() {
@@ -292,13 +291,11 @@ public class OfertaBean implements Serializable {
 		sistema.setNome(sistemaFabricante);
 		try {
 			sistemaService.save(sistema);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema, cadastrado", " "));
+			Util.mensagemInfo("Sistema cadastrado");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Houve um erro, sistema não cadastrado", " "));
+			Util.mensagemErro("Erro Banco de Dados");
 		}
 
 	}
@@ -309,7 +306,7 @@ public class OfertaBean implements Serializable {
 	 * @return
 	 */
 	public String redirecionarSistema() {
-		return "cadastrarSistema";
+		return "/sistema/cadastrar";
 	}
 
 	public Oferta getOferta() {

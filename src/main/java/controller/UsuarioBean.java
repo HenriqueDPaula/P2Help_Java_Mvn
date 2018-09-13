@@ -57,6 +57,7 @@ public class UsuarioBean implements Serializable {
 	 * Construtor setando atributos vazios e instanciando respectivas services
 	 */
 	public UsuarioBean() {
+		setEmail("");
 		// MunicipioSelect = selectMunicipios();
 		this.municipioService = new MunicipioService();
 		this.usuarioService = new UsuarioService();
@@ -73,7 +74,7 @@ public class UsuarioBean implements Serializable {
 		if (usuario != null) {
 			setUsuario(usuario);
 			Util.setSessionParameter("usuarioL", usuario); // Usuario
-			return "pages/pageUsuario";
+			return "pages/usuario/perfil";
 		} else {
 			Util.mensagemErro("Usuário ou senha não conferem!");
 			return "";
@@ -170,7 +171,7 @@ public class UsuarioBean implements Serializable {
 		} catch (Exception e) {
 			Util.mensagemErro("Exclua suas ofertas antes!");
 		}
-		return "ofertasUsuario";
+		return "/oferta/usuario";
 	}
 
 	/**
@@ -187,7 +188,7 @@ public class UsuarioBean implements Serializable {
 	 */
 	public String atualizar() {
 		usuario = usuarioService.findById(usuario.getIdusuario());
-		return "atualizarUsuario";
+		return "/usuario/atualizar";
 	}
 
 	/**
@@ -200,7 +201,7 @@ public class UsuarioBean implements Serializable {
 		usuarioService.atualizar(usuario);
 		Util.mensagemInfo("Alterado com sucesso");
 
-		return "pageUsuario";
+		return "/usuario/perfil";
 	}
 
 	/**
@@ -240,7 +241,7 @@ public class UsuarioBean implements Serializable {
 	 * @return
 	 */
 	public String redirecionaPerfil() {
-		return "pageUsuario";
+		return "/usuario/perfil";
 	}
 
 	public void refresh() {
@@ -263,7 +264,7 @@ public class UsuarioBean implements Serializable {
 		setNumero("");
 		setRg(null);
 		setRgEmissor("");
-		return "pages/cadastrarUsuario.jsf";
+		return "pages/usuario/cadastrar";
 	}
 
 	/**

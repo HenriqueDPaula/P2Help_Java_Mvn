@@ -21,7 +21,8 @@
 				</p:column>
 
 				<p:column headerText="Selecionar agenda">
-					<p:commandButton value="avaliar" action="avaliacao">
+					<p:commandButton value="avaliar"
+						action="#{agendaBean.redirecionarAvaliacao()}">
 						<f:setPropertyActionListener value="#{agendaAvaliar}"
 							target="#{agendaBean.agendaAvaliar}" />
 					</p:commandButton>
