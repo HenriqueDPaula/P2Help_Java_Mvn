@@ -2,6 +2,7 @@ package dao;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -42,6 +43,19 @@ public class ContratacaoDAO implements Serializable {
 		contratacao = (Contratacao) query.uniqueResult();
 
 		return contratacao;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Contratacao> listaContratacoes() {
+		List<Contratacao> contratacoes = null;
+
+		session = HibernateUtil.getSessionFactory().openSession();
+
+		String hql = "from Contratacao where 1=1";
+		Query query = (Query) session.createQuery(hql);
+		contratacoes = query.list();
+
+		return contratacoes;
 	}
 
 	/**

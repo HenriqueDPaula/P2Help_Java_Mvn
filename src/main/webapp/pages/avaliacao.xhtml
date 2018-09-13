@@ -8,7 +8,9 @@
 		<h:form>
 			<p:messages />
 			<hr />
-			<h:outputText value="#{agendaBean.agendaAvaliar.idagenda.dataEhora}" />
+			<h:outputText value="#{agendaBean.agendaAvaliar.idagenda.dataEhora}" >
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+			</h:outputText>
 			<p:panelGrid columns="2" border="1">
 				<p:outputLabel value="Nota pelo serviço:" />
 				<p:rating value="#{agendaBean.servico}" stars="10" />

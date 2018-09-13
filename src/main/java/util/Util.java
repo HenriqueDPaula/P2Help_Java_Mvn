@@ -75,8 +75,20 @@ public class Util {
 			Address[] toUser = InternetAddress.parse("henrique.depaula@hotmail.com");
 
 			message.setRecipients(Message.RecipientType.TO, toUser);
-			message.setSubject("ContrataÃ§Ã£o da oferta: " + oferta.getTitulo());// Assunto
-			message.setText("Teste oferta" + oferta.getDescricao() + oferta.getValorHora());
+			message.setSubject("Contratação da oferta: " + oferta.getTitulo());// Assunto
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("Titulo: " + oferta.getTitulo());
+			sb.append(System.getProperty("line.separator"));
+			sb.append("Descrição: " + oferta.getDescricao());
+			sb.append(System.getProperty("line.separator"));
+			sb.append("Valor/hora: " + oferta.getValorHora());
+			sb.append(System.getProperty("line.separator"));
+			sb.append("Email ofertante: " + oferta.getUsuario().getEmail());
+			sb.append(System.getProperty("line.separator"));
+			sb.append("Favor entra em contato com o ofertante para seguir com a compra");
+
+			message.setText(sb.toString());
 			Transport.send(message);
 
 			System.out.println("Email enviado com sucesso ==============================================!!!");

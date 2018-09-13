@@ -198,6 +198,7 @@ public class UsuarioBean implements Serializable {
 	public String confirmUpdate() {
 
 		usuarioService.atualizar(usuario);
+		Util.mensagemInfo("Alterado com sucesso");
 
 		return "pageUsuario";
 	}
