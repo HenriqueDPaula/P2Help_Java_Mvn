@@ -205,7 +205,7 @@ public class OfertaBean implements Serializable {
 	 * Apagar Oferta
 	 */
 	public String deleteOferta() {
-		this.oferta = ofertaService.findById(this.oferta.getIdoferta());
+		oferta = encontrarOfertaPeloId();
 		try {
 			deleteConfirm(); // MÃ©todo chamando a service de oferta
 			Util.mensagemInfo("Oferta excluída");
@@ -216,6 +216,10 @@ public class OfertaBean implements Serializable {
 
 		return "/usuario/perfil";
 
+	}
+
+	public Oferta encontrarOfertaPeloId() {
+		return ofertaService.findById(this.oferta.getIdoferta());
 	}
 
 	/**
@@ -286,9 +290,7 @@ public class OfertaBean implements Serializable {
 	}
 
 	public void cadastrarSistema() {
-		sistema = new Sistema();
-		sistema.setFabricante(sistemaNome);
-		sistema.setNome(sistemaFabricante);
+		sistema = new Sistema(sistemaFabricante, sistemaNome);
 		try {
 			sistemaService.save(sistema);
 			Util.mensagemInfo("Sistema cadastrado");

@@ -35,6 +35,7 @@ public class ContatoBean implements Serializable {
 	private final static String EMAIL = "p2helpemail@gmail.com";
 	private final static String SENHA = "emailp2help";
 
+	/* Config */
 	private final static String HOST = "mail.smtp.host";
 	private final static String GMAIL = "smtp.gmail.com";
 	private final static String SOCKET_PORT = "mail.smtp.socketFactory.port";

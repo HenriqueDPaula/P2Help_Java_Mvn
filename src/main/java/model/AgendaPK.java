@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -30,6 +29,11 @@ public class AgendaPK implements Serializable {
 
 	public AgendaPK() {
 
+	}
+
+	public AgendaPK(Date dataHora, Oferta oferta) {
+		this.dataEhora = dataHora;
+		this.oferta = oferta;
 	}
 
 	public Date getDataEhora() {

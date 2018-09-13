@@ -29,6 +29,11 @@ public class Sistema implements Serializable {
 
 	}
 
+	public Sistema(String fabricante, String nome) {
+		this.fabricante = fabricante;
+		this.nome = nome;
+	}
+
 	/*
 	 * Id e sequences do banco
 	 */

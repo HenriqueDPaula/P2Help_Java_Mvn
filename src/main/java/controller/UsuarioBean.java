@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -29,6 +28,7 @@ public class UsuarioBean implements Serializable {
 	 * Atributos
 	 */
 	private static final long serialVersionUID = -8696022544177517987L;
+	/* USUÁRIO */
 	private String nome;
 	private String senha;
 	private String senhaConfirm;
@@ -124,7 +124,6 @@ public class UsuarioBean implements Serializable {
 	}
 
 	public String sair() {
-
 		usuario = null;
 		usuario = new Usuario();
 		Util.invalidateSession();
@@ -137,9 +136,9 @@ public class UsuarioBean implements Serializable {
 	 * @return
 	 */
 	public String validarSenhas() {
-		if (usuarioService.validarUsuario(email) == false) { // Se nï¿½o achar o email inserido, prossegue
-			if (senha.equals(senhaConfirm)) { // Se as duas senhas conferirem, prossegue
-				if (cadastrar()) { // Mï¿½todo responsï¿½vel pela persistencia
+		if (usuarioService.validarUsuario(email) == false) {
+			if (senha.equals(senhaConfirm)) {
+				if (cadastrar()) {
 					Util.mensagemInfo("Usuário cadastrado; Faça Login para continuar");
 				}
 				return "/login";
@@ -160,7 +159,7 @@ public class UsuarioBean implements Serializable {
 	 * @return
 	 */
 	public String delete() {
-		this.usuario = usuarioService.findById(this.usuario.getIdusuario());
+		usuario = encontrarUsuarioPeloId();
 		try {
 			deleteConfirm();
 			Util.mensagemInfo("Excluido");
@@ -187,8 +186,12 @@ public class UsuarioBean implements Serializable {
 	 * @return
 	 */
 	public String atualizar() {
-		usuario = usuarioService.findById(usuario.getIdusuario());
+		usuario = encontrarUsuarioPeloId();
 		return "/usuario/atualizar";
+	}
+
+	public Usuario encontrarUsuarioPeloId() {
+		return usuarioService.findById(usuario.getIdusuario());
 	}
 
 	/**

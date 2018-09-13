@@ -33,11 +33,9 @@ public class SistemaBean implements Serializable {
 	 * Cadstro de Sistema sem verificaçao
 	 */
 	public String cadastrarSistema() {
-		sistema = new Sistema();
-		sistema.setFabricante(fabricante1);
-		sistema.setNome(nome1);
+		sistema = new Sistema(fabricante1, nome1);
 		sistemaService.save(sistema);
-		return "cadastrarOferta";
+		return "/oferta/cadastrar";
 	}
 
 	// public List<Sistema> selectOne() {

@@ -46,6 +46,12 @@ public class Contratacao implements Serializable {
 
 	}
 
+	public Contratacao(Agenda agenda, Date data, char status) {
+		this.agenda = agenda;
+		this.dataContratacao = data;
+		this.status = status;
+	}
+
 	/**
 	 * @return the idcontratacao
 	 */

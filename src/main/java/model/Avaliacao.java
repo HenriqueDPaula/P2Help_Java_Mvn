@@ -41,6 +41,13 @@ public class Avaliacao implements Serializable {
 	@Column(name = "COMENTARIO", nullable = true)
 	private String comentario;
 
+	public Avaliacao(Contratacao contratacao, Integer atendimento, Integer servico, String comentario) {
+		this.idcontratacao = contratacao;
+		this.atendimento = atendimento;
+		this.comentario = comentario;
+		this.servico = servico;
+	}
+
 	public Avaliacao() {
 
 	}
