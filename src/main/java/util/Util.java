@@ -72,7 +72,7 @@ public class Util {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("p2helpemail@gmail.com")); // Remetente
 
-			Address[] toUser = InternetAddress.parse("henrique.depaula@hotmail.com");
+			Address[] toUser = InternetAddress.parse("baracho.rocha@opet.edu.br");
 
 			message.setRecipients(Message.RecipientType.TO, toUser);
 			message.setSubject("Contratação da oferta: " + oferta.getTitulo());// Assunto
