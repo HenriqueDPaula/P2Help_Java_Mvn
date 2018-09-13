@@ -16,10 +16,12 @@
 	background-color: #f5f5f5 !important;
 	border: none !important;
 }
+
 .ui-menuitem-link {
 	padding-top: 6px !important;
 	padding-bottom: 9px !important;
 }
+
 .ui-panelmenu-header {
 	border-left: 0px !important;
 	border-right: 0px !important;
@@ -27,12 +29,14 @@
 	padding-top: 3px !important;
 	padding-bottom: 3px !important;
 }
+
 .classe-home {
 	font-size: 14px !important;
 	font-weight: bold !important;
 	border-bottom: 1px solid #d8d8d8 !important;
 	width: 225px !important;
 }
+
 .classe-signOut {
 	font-size: 14px !important;
 	font-weight: bold !important;
@@ -40,20 +44,25 @@
 	width: 225px !important;
 	padding-bottom: 11px !important;
 }
+
 .classe-signOut.ui-state-hover {
 	background-color: #dddddd !important;
 	color: #424242 !important;
 }
+
 .classe-home.ui-state-hover {
 	background-color: #dddddd !important;
 	color: #424242 !important;
 }
+
 .ui-layout-unit-content {
 	overflow: hidden !important;
 }
+
 .right {
 	float: right;
 }
+
 .left {
 	float: left;
 }
@@ -62,8 +71,8 @@
 		<!-- INSERIR UI:COMPOSITION, UI:INSERT E AFINS -->
 		<p:layout fullPage="true">
 			<p:layoutUnit position="north" resizable="false" size="60">
-<!-- 				<h:graphicImage library="imagens" name="oferta.png" height="45" -->
-<!-- 					style="margin-left:18px;" /> -->
+				<!-- 				<h:graphicImage library="imagens" name="oferta.png" height="45" -->
+				<!-- 					style="margin-left:18px;" /> -->
 				<h:outputText value="P2Help"
 					style="margin-left: 10px; color:purple; font-size:32px !important; position:relative;" />
 				<h:outputLabel value="#{usuarioBean.usuario.nome}"
@@ -104,9 +113,11 @@
 
 					<p:submenu label="Contato">
 						<p:menuitem value="Reclamações" style="font-size:13px;"
-							icon="ui-icon-thumb_down" />
+							icon="ui-icon-thumb_down"
+							action="#{contatoBean.redirecionarReclamacao()}" />
 						<p:menuitem value="Sugestões e Melhorias" style="font-size:13px;"
-							icon="ui-icon-thumb_up" />
+							icon="ui-icon-thumb_up"
+							action="#{contatoBean.redirecionarMelhoria()}" />
 					</p:submenu>
 				</p:panelMenu>
 				<p:menu>
