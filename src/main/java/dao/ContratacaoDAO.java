@@ -32,14 +32,15 @@ public class ContratacaoDAO implements Serializable {
 
 	}
 
-	public Contratacao findById(int idoferta, Date dataEhora) {
+	public Contratacao findById(int idoferta, Date data, String hora) {
 		session = HibernateUtil.getSessionFactory().openSession();
 
 		Contratacao contratacao = new Contratacao();
-		String hql = "from Contratacao where idoferta = :idoferta and data_hora = :dataEhora";
+		String hql = "from Contratacao where idoferta = :idoferta and and data =:data and hora =:hora";
 		Query query = (Query) session.createQuery(hql);
 		query.setParameter("idoferta", idoferta);
-		query.setParameter("dataEhora", dataEhora);
+		query.setParameter("data", data);
+		query.setParameter("hora", hora);
 		contratacao = (Contratacao) query.uniqueResult();
 
 		return contratacao;

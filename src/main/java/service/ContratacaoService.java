@@ -28,8 +28,8 @@ public class ContratacaoService implements Serializable {
 		this.contratacaoDAO.save(contratacao);
 	}
 
-	public Contratacao findById(int idoferta, Date dataEhora) {
-		return this.contratacaoDAO.findById(idoferta, dataEhora);
+	public Contratacao findById(int idoferta, Date data, String hora) {
+		return this.contratacaoDAO.findById(idoferta, data, hora);
 	}
 
 	/**

@@ -32,7 +32,8 @@ public class Contratacao implements Serializable {
 
 	@OneToOne
 	@JoinColumns({ @JoinColumn(name = "IDOFERTA", referencedColumnName = "IDOFERTA"),
-			@JoinColumn(name = "DATA_HORA", referencedColumnName = "DATA_HORA"), })
+			@JoinColumn(name = "data", referencedColumnName = "data"),
+			@JoinColumn(name = "hora", referencedColumnName = "hora"), })
 	private Agenda agenda;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -59,18 +60,6 @@ public class Contratacao implements Serializable {
 	 */
 	public void setIdcontratacao(Integer idcontratacao) {
 		this.idcontratacao = idcontratacao;
-	}
-
-	public Agenda getAgenda() {
-		return agenda;
-	}
-
-	/**
-	 * @param idcontratacao
-	 *            the idcontratacao to set
-	 */
-	public void setAgenda(Agenda agenda) {
-		this.agenda = agenda;
 	}
 
 	/**
@@ -119,7 +108,6 @@ public class Contratacao implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((agenda == null) ? 0 : agenda.hashCode());
 		result = prime * result + ((dataContratacao == null) ? 0 : dataContratacao.hashCode());
 		result = prime * result + ((idcontratacao == null) ? 0 : idcontratacao.hashCode());
 		result = prime * result + status;
@@ -140,11 +128,6 @@ public class Contratacao implements Serializable {
 		if (!(obj instanceof Contratacao))
 			return false;
 		Contratacao other = (Contratacao) obj;
-		if (agenda == null) {
-			if (other.agenda != null)
-				return false;
-		} else if (!agenda.equals(other.agenda))
-			return false;
 		if (dataContratacao == null) {
 			if (other.dataContratacao != null)
 				return false;
@@ -158,6 +141,21 @@ public class Contratacao implements Serializable {
 		if (status != other.status)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the agendaData
+	 */
+	public Agenda getAgenda() {
+		return agenda;
+	}
+
+	/**
+	 * @param agendaData
+	 *            the agendaData to set
+	 */
+	public void setAgenda(Agenda agendaData) {
+		this.agenda = agendaData;
 	}
 
 }

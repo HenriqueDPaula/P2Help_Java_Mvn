@@ -39,11 +39,13 @@ public class AgendaBean implements Serializable {
 	 */
 	private AgendaPK agendaPK;
 	private Date dataEhora;
-	
+	private Date data;
+	private String hora;
+
 	private AgendaService agendaService;
 	private ContratacaoService contratacaoService;
 	private AvaliacaoService avaliacaoService;
-	
+
 	private Agenda agenda;
 	private Agenda agendaAvaliar;
 	private Agenda agendaSelecionada;
@@ -53,13 +55,12 @@ public class AgendaBean implements Serializable {
 	private Oferta oferta;
 	private Oferta ofertaSelecionada;
 	private Usuario usuario;
-	
+
 	private Integer servico;
 	private Integer atendimento;
 	private String comentario;
-	
+
 	private List<Agenda> listarAgenda;
-	
 
 	/**
 	 * Construtor instanciando os principais atributos
@@ -83,10 +84,22 @@ public class AgendaBean implements Serializable {
 	 */
 	public String cadastrarAgenda() {
 
-		agendaPK = new AgendaPK(); // Nova chave primária
-		agendaPK.setDataEhora(dataEhora);
-		agendaPK.setOferta(oferta); // Objeto oferta que está na sessão
-		agenda.setIdagenda(agendaPK); // Chave primária da agenda
+		SimpleDateFormat sdfData = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm");
+
+		String dataString = sdfData.format(dataEhora);
+		try {
+			data = sdfData.parse(dataString);
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		hora = sdfHora.format(dataEhora);
+
+		agendaPK = new AgendaPK();
+		agendaPK.setData(data);
+		agendaPK.setHora(hora);
+		agendaPK.setOferta(oferta);
+		agenda.setIdagenda(agendaPK);
 		try {
 			agendaService.save(agenda);
 			Util.mensagemInfo("Agenda cadastrada com sucesso!");
@@ -113,8 +126,11 @@ public class AgendaBean implements Serializable {
 	public String agendaUpdate() {
 
 		agenda = agendaService.findById(agendaSelecionada.getIdagenda().getOferta().getIdoferta(),
-				agendaSelecionada.getIdagenda().getDataEhora()); // Passando como parâmetros o id da oferta e a data
-																	// para encontrar a agenda
+				agendaSelecionada.getIdagenda().getData(), agendaSelecionada.getIdagenda().getHora()); // Passando como
+																										// parâmetros o
+																										// id da oferta
+																										// e a data
+		// para encontrar a agenda
 		agenda.setUsuario(usuario); // Setando o usuario logado
 		try {
 			agendaService.atualizar(agenda); // Chama o método para atualizar, inserindo o id do usuario
@@ -177,10 +193,19 @@ public class AgendaBean implements Serializable {
 	public String avaliacao() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm");
 
-		sdf.format(agendaAvaliar.getIdagenda().getDataEhora());
+		String dataEhoraString = agendaAvaliar.getIdagenda().getData() + " " + agendaAvaliar.getIdagenda().getHora();
+
+		Date dataEhora;
+		try {
+			dataEhora = sdf.parse(dataEhoraString);
+			sdf.format(dataEhora);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		contratacao = contratacaoService.findById(agendaAvaliar.getIdagenda().getOferta().getIdoferta(),
-				agendaAvaliar.getIdagenda().getDataEhora());
+				agendaAvaliar.getIdagenda().getData(), agendaAvaliar.getIdagenda().getHora());
 		avaliacao.setIdcontratacao(contratacao); // Chave primária da avaliação é a
 		avaliacao.setAtendimento(atendimento);
 		avaliacao.setServico(servico);
@@ -469,6 +494,36 @@ public class AgendaBean implements Serializable {
 
 	public void setAgendaAvaliar(Agenda agendaAvaliar) {
 		this.agendaAvaliar = agendaAvaliar;
+	}
+
+	/**
+	 * @return the data
+	 */
+	public Date getData() {
+		return data;
+	}
+
+	/**
+	 * @param data
+	 *            the data to set
+	 */
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	/**
+	 * @return the hora
+	 */
+	public String getHora() {
+		return hora;
+	}
+
+	/**
+	 * @param hora
+	 *            the hora to set
+	 */
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 
 	// public Agenda inserirUsuario() {

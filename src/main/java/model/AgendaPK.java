@@ -20,9 +20,12 @@ public class AgendaPK implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8913733314598981150L;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATA_HORA", nullable = false)
-	private Date dataEhora;
+
+	@Column(name = "DATA", nullable = false)
+	private Date data;
+
+	@Column(name = "HORA", nullable = false)
+	private String hora;
 
 	@ManyToOne
 	@JoinColumn(name = "IDOFERTA")
@@ -32,13 +35,34 @@ public class AgendaPK implements Serializable {
 
 	}
 
-	public Date getDataEhora() {
-		return dataEhora;
+	/**
+	 * @return the data
+	 */
+	public Date getData() {
+		return data;
 	}
 
-	public void setDataEhora(Date dataEhora) {
-		this.dataEhora = dataEhora;
+	/**
+	 * @param data
+	 *            the data to set
+	 */
+	public void setData(Date data) {
+		this.data = data;
+	}
 
+	/**
+	 * @return the hora
+	 */
+	public String getHora() {
+		return hora;
+	}
+
+	/**
+	 * @param hora
+	 *            the hora to set
+	 */
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 
 	/**
@@ -72,7 +96,8 @@ public class AgendaPK implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dataEhora == null) ? 0 : dataEhora.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((hora == null) ? 0 : hora.hashCode());
 		result = prime * result + ((oferta == null) ? 0 : oferta.hashCode());
 		return result;
 	}
@@ -84,23 +109,37 @@ public class AgendaPK implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (!(obj instanceof AgendaPK))
+		}
+		if (!(obj instanceof AgendaPK)) {
 			return false;
+		}
 		AgendaPK other = (AgendaPK) obj;
-		if (dataEhora == null) {
-			if (other.dataEhora != null)
+		if (data == null) {
+			if (other.data != null) {
 				return false;
-		} else if (!dataEhora.equals(other.dataEhora))
+			}
+		} else if (!data.equals(other.data)) {
 			return false;
+		}
+		if (hora == null) {
+			if (other.hora != null) {
+				return false;
+			}
+		} else if (!hora.equals(other.hora)) {
+			return false;
+		}
 		if (oferta == null) {
-			if (other.oferta != null)
+			if (other.oferta != null) {
 				return false;
-		} else if (!oferta.equals(other.oferta))
+			}
+		} else if (!oferta.equals(other.oferta)) {
 			return false;
+		}
 		return true;
 	}
 

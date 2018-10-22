@@ -38,8 +38,8 @@ public class AgendaService implements Serializable {
 	 * Encontrar agenda pelo id(agendaPK)
 	 *
 	 */
-	public Agenda findById(int idoferta, Date dataEhora) {
-		return this.agendaDAO.findById(idoferta, dataEhora);
+	public Agenda findById(int idoferta, Date data, String hora) {
+		return this.agendaDAO.findById(idoferta, data, hora);
 	}
 
 	/**

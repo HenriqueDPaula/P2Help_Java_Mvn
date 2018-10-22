@@ -70,14 +70,15 @@ public class AgendaDAO implements Serializable {
 	 *
 	 */
 
-	public Agenda findById(int idoferta, Date dataEhora) {
+	public Agenda findById(int idoferta, Date data, String hora) {
 		session = HibernateUtil.getSessionFactory().openSession();
 
 		Agenda agenda = new Agenda();
-		String hql = "from Agenda where idoferta = :idoferta and data_hora = :dataEhora";
+		String hql = "from Agenda where idoferta = :idoferta and data = :data and hora =: hora";
 		Query query = (Query) session.createQuery(hql);
 		query.setParameter("idoferta", idoferta);
-		query.setParameter("dataEhora", dataEhora);
+		query.setParameter("data", data);
+		query.setParameter("hora", hora);
 		agenda = (Agenda) query.uniqueResult();
 
 		return agenda;
@@ -118,7 +119,7 @@ public class AgendaDAO implements Serializable {
 		if (listAgenda != null) {
 			for (Agenda agenda : listAgenda) {
 				Contratacao contratacao = contratacaoDAO.findById(agenda.getIdagenda().getOferta().getIdoferta(),
-						agenda.getIdagenda().getDataEhora());
+						agenda.getIdagenda().getData(), agenda.getIdagenda().getHora());
 				if (contratacao == null) {
 					listaAgendasNaoContratadas.add(agenda);
 				}
@@ -144,7 +145,7 @@ public class AgendaDAO implements Serializable {
 
 			for (Agenda agenda : listAgendaByIdUsuario) {
 				Contratacao contratacao = contratacaoDAO.findById(agenda.getIdagenda().getOferta().getIdoferta(),
-						agenda.getIdagenda().getDataEhora());
+						agenda.getIdagenda().getData(), agenda.getIdagenda().getHora());
 
 				Avaliacao avaliacao = avaliacaoDAO.findContratacaoAvaliada(contratacao.getIdcontratacao());
 

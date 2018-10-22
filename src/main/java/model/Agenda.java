@@ -19,8 +19,6 @@ public class Agenda implements Serializable {
 
 	@EmbeddedId
 	private AgendaPK idagenda;
-	
-	
 
 	@ManyToOne
 	@JoinColumn(name = "IDUSUARIO", nullable = true)
